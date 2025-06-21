@@ -6,13 +6,16 @@ import asyncio
 from typing import Callable
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_HOST, CONF_USERNAME, CONF_PASSWORD, EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STARTED
+from homeassistant.const import CONF_HOST, CONF_USERNAME, CONF_PASSWORD, EVENT_HOMEASSISTANT_START, \
+    EVENT_HOMEASSISTANT_STARTED
 from homeassistant.core import HomeAssistant, CoreState
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .lib.homeassistant.coordinator.standby_power_device_data_update_coordinator import StandbyPowerDeviceDataUpdateCoordinator
+from .lib.homeassistant.coordinator.standby_power_device_data_update_coordinator import \
+    StandbyPowerDeviceDataUpdateCoordinator
 from .lib.homeassistant.coordinator.heating_device_data_update_coordinator import HeatingDeviceDataUpdateCoordinator
-from .lib.homeassistant.coordinator.ventilator_device_data_update_coordinator import VentilatorDeviceDataUpdateCoordinator
+from .lib.homeassistant.coordinator.ventilator_device_data_update_coordinator import \
+    VentilatorDeviceDataUpdateCoordinator
 from .lib.homeassistant.coordinator.light_device_data_update_coordinator import LightDeviceDataUpdateCoordinator
 from .lib.model.device import enabled_device_key_to_device_type
 from .lib.homeassistant.coordinator.common.cvnet_websocket_data_update_coordinator import \
@@ -39,9 +42,11 @@ async def get_coordinators(hass: HomeAssistant, entry: CvnetConfigEntry) -> list
     mapping: dict[str, Callable[[str], CvnetDataUpdateCoordinator]] = {
         "isTelemetering": lambda k: TelemeteringDeviceDataUpdateCoordinator(hass, config),
         "isLight": lambda k: LightDeviceDataUpdateCoordinator(hass, config, enabled_device_key_to_device_type(k)),
-        "isVentilator": lambda k: VentilatorDeviceDataUpdateCoordinator(hass, config, enabled_device_key_to_device_type(k)),
+        "isVentilator": lambda k: VentilatorDeviceDataUpdateCoordinator(hass, config,
+                                                                        enabled_device_key_to_device_type(k)),
         "isHeating": lambda k: HeatingDeviceDataUpdateCoordinator(hass, config, enabled_device_key_to_device_type(k)),
-        "isConcent": lambda k: StandbyPowerDeviceDataUpdateCoordinator(hass, config, enabled_device_key_to_device_type(k)),
+        "isConcent": lambda k: StandbyPowerDeviceDataUpdateCoordinator(hass, config,
+                                                                       enabled_device_key_to_device_type(k)),
     }
 
     coordinators = []
@@ -91,6 +96,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: CvnetConfigEntry) -> boo
                 EVENT_HOMEASSISTANT_STARTED, _async_start_listener
             )
         )
+    else:
+       entry.runtime_data.listener_tasks.extend(listener_tasks)
 
     return True
 
