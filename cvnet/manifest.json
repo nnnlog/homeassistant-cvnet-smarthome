@@ -1,0 +1,17 @@
+{
+  "domain": "cvnet",
+  "name": "CVnet SmartHome",
+  "codeowners": [
+    "@nnnlog"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/nnnlog/homeassistant-cvnet-smarthome",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "quality_scale": "bronze",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": [],
+  "version": "0.0.1"
+}

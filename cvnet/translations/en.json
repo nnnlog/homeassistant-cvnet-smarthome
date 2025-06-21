@@ -1,0 +1,149 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Device is already configured"
+    },
+    "error": {
+      "invalid_auth": "Invalid credential"
+    },
+    "step": {
+      "select_region": {
+        "title": "Select Region",
+        "data": {
+          "region": "Region"
+        }
+      },
+      "select_site": {
+        "title": "Select Site",
+        "description": "Selected region: {region}",
+        "data": {
+          "site_name": "Site"
+        }
+      },
+      "login": {
+        "title": "Login to the CVnet service",
+        "description": "Selected region: {region}\nSelected site: {site_name}\n\nId is what you used to login to the CVnet Smart Home app. If you don't have an id, you must create one in the app. Your credential will be stored and proceed on your machine and CVnet server only.",
+        "data": {
+          "username": "Id",
+          "password": "Password"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "electricity": {
+        "name": "Electricity Consumption"
+      },
+      "water": {
+        "name": "Water Consumption"
+      },
+      "gas": {
+        "name": "Gas Consumption"
+      }
+    },
+    "climate": {
+      "heating": {
+        "name": "Heating {name}",
+        "state": {
+          "heat": "Heating",
+          "off": "Off"
+        },
+        "state_attributes": {
+          "current_temperature": {
+            "name": "Current Temperature"
+          },
+          "temperature": {
+            "name": "Target Temperature"
+          },
+          "hvac_action": {
+            "name": "HVAC Action",
+            "state": {
+              "heating": "Heating",
+              "idle": "Idle",
+              "off": "Off"
+            }
+          }
+        }
+      },
+      "ventilator": {
+        "name": "Ventilator {name}",
+        "state": {
+          "off": "Off",
+          "fan_only": "Ventilation"
+        },
+        "state_attributes": {
+          "fan_mode": {
+            "name": "Fan Speed",
+            "state": {
+              "off": "Off",
+              "low": "Low",
+              "medium": "Medium",
+              "high": "High"
+            }
+          },
+          "hvac_action": {
+            "state": {
+              "off": "Off",
+              "fan_only": "Ventilating"
+            }
+          }
+        }
+      }
+    },
+    "fan": {
+      "ventilator": {
+        "name": "Ventilator {name}",
+        "state": {
+          "off": "Off",
+          "on": "On"
+        },
+        "state_attributes": {
+          "preset_mode": {
+            "name": "Fan Speed",
+            "state": {
+              "low": "Low",
+              "medium": "Medium",
+              "high": "High"
+            }
+          }
+        }
+      }
+    },
+    "light": {
+      "light": {
+        "name": "Light {name}",
+        "state": {
+          "on": "On",
+          "off": "Off"
+        }
+      }
+    },
+    "switch": {
+      "outlet": {
+        "name": "Outlet {name}",
+        "state": {
+          "on": "On",
+          "off": "Off"
+        }
+      }
+    }
+  },
+  "device": {
+    "telemetering": {
+      "name": "Telemetering Device"
+    },
+    "ventilator": {
+      "name": "Ventilator Device"
+    },
+    "outlet": {
+      "name": "Outlet Device"
+    },
+    "heating": {
+      "name": "Heating Device"
+    },
+    "light": {
+      "name": "Light Device"
+    }
+  }
+}

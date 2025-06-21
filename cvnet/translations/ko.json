@@ -1,0 +1,149 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "이미 설정된 장치입니다."
+    },
+    "error": {
+      "invalid_auth": "올바르지 않은 인증 정보입니다."
+    },
+    "step": {
+      "select_region": {
+        "title": "지역 선택",
+        "data": {
+          "region": "지역"
+        }
+      },
+      "select_site": {
+        "title": "단지 선택",
+        "description": "선택한 지역: {region}",
+        "data": {
+          "site_name": "단지"
+        }
+      },
+      "login": {
+        "title": "CVnet Smart Home 로그인",
+        "description": "선택한 지역: {region}\n선택한 단지: {site_name}\n\nCVnet Smart Home 앱에 로그인할 때 사용한 아이디를 입력해주세요. 아이디가 없다면 앱에서 먼저 생성해야 합니다. 입력한 로그인 정보는 HomeAssistant 장치와 CVnet 서버에서만 저장되고 처리됩니다.",
+        "data": {
+          "username": "아이디",
+          "password": "비밀번호"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "electricity": {
+        "name": "전력 소비"
+      },
+      "water": {
+        "name": "수도 소비"
+      },
+      "gas": {
+        "name": "가스 소비"
+      }
+    },
+    "climate": {
+      "heating": {
+        "name": "난방 {name}",
+        "state": {
+          "heat": "난방",
+          "off": "꺼짐"
+        },
+        "state_attributes": {
+          "current_temperature": {
+            "name": "현재 온도"
+          },
+          "temperature": {
+            "name": "설정 온도"
+          },
+          "hvac_action": {
+            "name": "HVAC Action",
+            "state": {
+              "heating": "난방 중",
+              "idle": "대기 중",
+              "off": "꺼짐"
+            }
+          }
+        }
+      },
+      "ventilator": {
+        "name": "환기 {name}",
+        "state": {
+          "off": "꺼짐",
+          "fan_only": "환기"
+        },
+        "state_attributes": {
+          "fan_mode": {
+            "name": "팬 속도",
+            "state": {
+              "off": "꺼짐",
+              "low": "약풍",
+              "medium": "중풍",
+              "high": "강풍"
+            }
+          },
+          "hvac_action": {
+            "state": {
+              "off": "꺼짐",
+              "fan_only": "환기 중"
+            }
+          }
+        }
+      }
+    },
+    "fan": {
+      "ventilator": {
+        "name": "환기 {name}",
+        "state": {
+          "off": "꺼짐",
+          "on": "켜짐"
+        },
+        "state_attributes": {
+          "preset_mode": {
+            "name": "팬 속도",
+            "state": {
+              "low": "약풍",
+              "medium": "중풍",
+              "high": "강풍"
+            }
+          }
+        }
+      }
+    },
+    "light": {
+      "light": {
+        "name": "조명 {name}",
+        "state": {
+          "on": "켜짐",
+          "off": "꺼짐"
+        }
+      }
+    },
+    "switch": {
+      "outlet": {
+        "name": "대기전력 {name}",
+        "state": {
+          "on": "켜짐",
+          "off": "꺼짐"
+        }
+      }
+    }
+  },
+  "device": {
+    "telemetering": {
+      "name": "원격검침 장치"
+    },
+    "ventilator": {
+      "name": "환기 장치"
+    },
+    "outlet": {
+      "name": "대기전력 장치"
+    },
+    "heating": {
+      "name": "난방 장치"
+    },
+    "light": {
+      "name": "조명 장치"
+    }
+  }
+}
