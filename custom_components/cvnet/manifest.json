@@ -7,11 +7,9 @@
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/nnnlog/homeassistant-cvnet-smarthome",
-  "homekit": {},
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/nnnlog/homeassistant-cvnet-smarthome/issues",
   "quality_scale": "bronze",
   "requirements": [],
-  "ssdp": [],
-  "version": "0.0.1",
-  "zeroconf": []
+  "version": "0.0.1"
 }
