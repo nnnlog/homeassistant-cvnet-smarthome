@@ -46,7 +46,7 @@
       "heating": {
         "name": "Heating {name}",
         "state": {
-          "heat": "Heating",
+          "heat": "Heat",
           "off": "Off"
         },
         "state_attributes": {
