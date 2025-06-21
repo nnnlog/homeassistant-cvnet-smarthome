@@ -82,7 +82,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: CvnetConfigEntry) -> boo
                     entry.async_create_task(hass, coordinator.listen())
                 )
 
-    if hass.state == CoreState.starting:
+    if hass.state == CoreState.starting or hass.state == CoreState.not_running:
         for task in listener_tasks:
             task.cancel()
 

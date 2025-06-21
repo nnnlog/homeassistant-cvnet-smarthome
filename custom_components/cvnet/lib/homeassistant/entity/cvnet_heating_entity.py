@@ -19,7 +19,7 @@ class CvnetHeatingEntity(CvnetEntity, ClimateEntity):
         data = coordinator.data[coordinator_data_key]
         self._set_state_function = data[entity_description.key]["set_state_function"]
 
-        self._attr_hvac_modes = [HVACMode.HEAT, HVACMode.OFF]
+        self._attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]
         self._attr_hvac_mode = data[entity_description.key]["state_mode"]
 
         self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
