@@ -20,6 +20,8 @@ from ...model.device import DeviceType, DeviceDetailAndConnectInformation, UnitD
 
 _LOGGER = logging.getLogger(__name__)
 
+_MAX_WS_FETCH_ALL_DATA_TIMEOUT = 3  # seconds
+
 class CvnetWebsocketClient(CvnetBaseClient):
     """
     This client has a responsibility for listening to the specific one kind of devices from the CVnet server.
@@ -61,7 +63,7 @@ class CvnetWebsocketClient(CvnetBaseClient):
                                                                      self._remote_tcp_address)
 
     async def _finish_all_data_collection(self):
-        await asyncio.sleep(5)
+        await asyncio.sleep(_MAX_WS_FETCH_ALL_DATA_TIMEOUT)
         async with self._locked_for_all_request:
             if self._future_for_all_request is not None and not self._future_for_all_request.done():
                 self._future_for_all_request.set_result(self._temp_data_for_all_request)
@@ -70,7 +72,7 @@ class CvnetWebsocketClient(CvnetBaseClient):
 
     async def get_data(self) -> dict[str, Any]:
         if self._established_future is not None and not self._established_future.done():
-            await asyncio.wait_for(self._established_future, timeout=5)
+            await asyncio.wait_for(self._established_future, timeout=_MAX_WS_FETCH_ALL_DATA_TIMEOUT)
 
         if self.socket is None:
             raise RuntimeError("Socket is not connected.")
@@ -89,7 +91,7 @@ class CvnetWebsocketClient(CvnetBaseClient):
 
                 _capture_task = asyncio.create_task(self._finish_all_data_collection())
         try:
-            return await asyncio.wait_for(self._future_for_all_request, 10)  # wait for 10 seconds for the data to be collected
+            return await asyncio.wait_for(self._future_for_all_request, _MAX_WS_FETCH_ALL_DATA_TIMEOUT * 2)  # wait for 10 seconds for the data to be collected
         finally:
             if _capture_task is not None and not _capture_task.cancelled():
                 _capture_task.cancel()
