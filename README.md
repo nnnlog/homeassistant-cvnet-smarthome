@@ -11,9 +11,13 @@ You must register the account in the CVnet SmartHome application first. And then
 
 ## Installation
 ### HACS
-With [HACS](https://github.com/hacs/integration), you can install this integration easily:
-- Add the custom repository URL `https://github.com/nnnlog/homeassistant-cvnet-smarthome`
-- Search for `CVnet SmartHome` in HACS and install it.
+You can easily install with below link.
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=nnnlog&repository=homeassistant-cvnet-smarthome&category=integration)
+
+Or, you can find the integration with `cvnet` keyword in HACS store.
+![image](https://github.com/user-attachments/assets/909a7614-b988-4e6c-8e9c-0ec073136871)
+
 
 ### Manual Installation
 Copy contents of `custom_components/cvnet/` to your Home Assistant `custom_components/cvnet/` directory.
