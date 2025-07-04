@@ -11,6 +11,7 @@ from .cvnet_entity import CvnetEntity
 
 class CvnetHeatingEntity(CvnetEntity, ClimateEntity):
     _set_state_function: Callable[[bool, float], Coroutine]
+    _cloud_target_temperature: float
 
     def __init__(self, coordinator: DataUpdateCoordinator[dict[str, Any]], entity_description: ClimateEntityDescription,
                  coordinator_data_key: str):
@@ -22,18 +23,35 @@ class CvnetHeatingEntity(CvnetEntity, ClimateEntity):
         self._attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]
         self._attr_hvac_mode = data[entity_description.key]["state_mode"]
 
-        self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
+        self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TURN_ON
 
         self._attr_target_temperature_step = 1
         self._attr_target_temperature_low = 5
         self._attr_target_temperature_high = 40
 
+        self._cloud_target_temperature = data[entity_description.key]["_target_temperature"]
         self._attr_target_temperature = data[entity_description.key]["target_temperature"]
         self._attr_current_temperature = data[entity_description.key]["current_temperature"]
 
         self._attr_hvac_action = data[entity_description.key]["state_action"]
 
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
+
+    async def async_turn_on(self) -> None:
+        """Turn the heating on."""
+        self._attr_hvac_mode = HVACMode.HEAT
+        self._attr_target_temperature = self._cloud_target_temperature
+        self.async_write_ha_state()
+
+        await self._set_state_function(True, self._cloud_target_temperature)
+
+    async def async_turn_off(self) -> None:
+        """Turn the heating off."""
+        self._attr_hvac_mode = HVACMode.OFF
+        self._attr_target_temperature = None
+        self.async_write_ha_state()
+
+        await self._set_state_function(False, self._cloud_target_temperature)
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         self._attr_hvac_mode = hvac_mode
@@ -52,6 +70,7 @@ class CvnetHeatingEntity(CvnetEntity, ClimateEntity):
     def _handle_coordinator_update(self):
         """Handle updated data from the coordinator."""
         data = self._data
+        self._cloud_target_temperature = data[self.entity_description.key]["_target_temperature"]
         self._attr_target_temperature = data[self.entity_description.key]["target_temperature"]
         self._attr_current_temperature = data[self.entity_description.key]["current_temperature"]
         self._attr_hvac_mode = data[self.entity_description.key]["state_mode"]

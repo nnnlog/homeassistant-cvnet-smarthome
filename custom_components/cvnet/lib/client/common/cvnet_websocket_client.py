@@ -156,6 +156,10 @@ class CvnetWebsocketClient(CvnetBaseClient):
                 _LOGGER.error(f"Ping failed: {e}")
                 _LOGGER.error(traceback.format_exc())
                 continue
+            except Exception as e:
+                _LOGGER.error(f"Unexpected error during ping: {e}")
+                _LOGGER.error(traceback.format_exc())
+                continue
             await asyncio.sleep(5)
 
     async def parse_contents_from_websocket(self, body: dict[str, Any]) -> dict[str, Any]:

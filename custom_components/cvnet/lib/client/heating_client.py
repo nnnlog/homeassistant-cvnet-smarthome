@@ -57,6 +57,7 @@ class HeatingClient(CvnetWebsocketClient):
                     ),
                     "heating": {
                         "set_state_function": functools.partial(lambda _heating, onoff, target_temp: self.set_state(int(_heating["number"]), onoff, target_temp if target_temp is not None else heating["setting_temp"]), heating),
+                        "_target_temperature": heating["setting_temp"],
                         "target_temperature": heating["setting_temp"] if heating["onoff"] else None,
                         "current_temperature": heating["current_temp"],
                         "state_mode": HVACMode.HEAT if heating["onoff"] else HVACMode.OFF,
