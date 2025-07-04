@@ -36,7 +36,7 @@ class CvnetVentilatorEntity(CvnetEntity, FanEntity):
 
     async def async_turn_on(self, percentage: int | None = None, preset_mode: str | None = None, **kwargs: Any) -> None:
         self._attr_is_on = True
-        self._attr_preset_mode = (preset_mode if preset_mode != FAN_OFF else None) or FAN_LOW
+        self._attr_custom_speed = percentage_to_ordered_list_item(_FAN_TYPES, percentage) if percentage != 0 else FAN_LOW
         self.async_write_ha_state()
 
         await self._set_state_function(self._attr_is_on, self._wind_level[self._attr_preset_mode])
@@ -44,14 +44,14 @@ class CvnetVentilatorEntity(CvnetEntity, FanEntity):
     async def async_turn_off(self, percentage: int | None = None, preset_mode: str | None = None,
                              **kwargs: Any) -> None:
         self._attr_is_on = False
-        self._attr_preset_mode = None
+        self._attr_custom_speed = None
         self.async_write_ha_state()
 
         await self._set_state_function(self._attr_is_on, 0)
 
     async def async_set_percentage(self, percentage: int) -> None:
         if percentage > 0:
-            wind_level = percentage_to_ordered_list_item(_FAN_TYPES, percentage) if percentage != 0 else FAN_OFF
+            wind_level = percentage_to_ordered_list_item(_FAN_TYPES, percentage)
             self._attr_custom_speed = wind_level
             self._attr_is_on = True
         else:
